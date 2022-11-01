@@ -1,6 +1,5 @@
 import time
 import cloudscraper
-from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 from requests import get, head
 
