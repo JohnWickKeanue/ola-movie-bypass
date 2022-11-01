@@ -1,7 +1,6 @@
 import time
 import cloudscraper
 from bs4 import BeautifulSoup
-from requests import get, head
 
 url = "https://olamovies.wtf/download/?key=q84dMFiC0FYTVJoS5frBQSEqpFUgODxFinhNFysPVAvi4BuIx%2BQ%3D&id=e80cb9b8088e5aebb0998aa2caf32122"
 
@@ -27,8 +26,8 @@ def ola(url) :
             jack = soup.text
             rose = jack.split('url = "')[-1]
             soup = rose.split('";')[0]
-            if soup != "":
-                   if "rocklinks.net" in soup:
+           
+            if "rocklinks.net" in soup:
                         url = soup
                         DOMAIN = "https://blog.disheye.com"
                         url = url[:-1] if url[-1] == '/' else url
@@ -49,7 +48,7 @@ def ola(url) :
                         try:
                             return r.json()['url']
                         except: return "Something went wrong :("
-                   elif "try2link.com" in soup:
+            elif "try2link.com" in soup:
                         
                         url = soup
                         url = url[:-1] if url[-1] == '/' else url
