@@ -25,26 +25,16 @@ def ola(url) :
     while 'rocklinks.net' not in soup and "try2link.com" not in soup:
             res = client.get(url, headers=headers)
             soup = BeautifulSoup(res.text, "html.parser")
-            test= soup.text
-            test2 = test.split('url = "')[-1]
-            
-            #print(test2) 
-            soup = test2.split('";')[0]
-            
-            print(soup)
+            jack = soup.text
+            rose = jack.split('url = "')[-1]
+            soup = rose.split('";')[0]
             if soup != "":
                    if "rocklinks.net" in soup:
                         url = soup
-                        
                         DOMAIN = "https://blog.disheye.com"
-                        
-                            
                         url = url[:-1] if url[-1] == '/' else url
-
                         code = url.split("/")[-1]
-                        
                         final_url = f"{DOMAIN}/{code}"
-
                         resp = client.get(final_url)
                         soup = BeautifulSoup(resp.content, "html.parser")
     
