@@ -24,66 +24,60 @@ def ola(url) :
         }
     while 'rocklinks.net' not in soup and "try2link.com" not in soup:
             res = client.get(url, headers=headers)
-            soup = BeautifulSoup(res.text,"html.parser")
+            soup = BeautifulSoup(res.text, "html.parser")
+            test= soup.text
+            test2 = test.split('url = "')[-1]
+            
+            #print(test2) 
+            soup = test2.split('";')[0]
+            
             print(soup)
-            soup = soup.findAll("a")[0].get("href")
             if soup != "":
                    if "rocklinks.net" in soup:
                         url = soup
-                        link = try2link_bypass(url)
-                        print(link) 
+                        
+                        DOMAIN = "https://blog.disheye.com"
+                        
+                            
+                        url = url[:-1] if url[-1] == '/' else url
+
+                        code = url.split("/")[-1]
+                        
+                        final_url = f"{DOMAIN}/{code}"
+
+                        resp = client.get(final_url)
+                        soup = BeautifulSoup(resp.content, "html.parser")
+    
+                        try: inputs = soup.find(id="go-link").find_all(name="input")
+                        except: return "Incorrect Link"
+    
+                        data = { input.get('name'): input.get('value') for input in inputs }
+ 
+                        h = { "x-requested-with": "XMLHttpRequest" }
+    
+                        time.sleep(10)
+                        r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+                        try:
+                            return r.json()['url']
+                        except: return "Something went wrong :("
                    elif "try2link.com" in soup:
+                        
                         url = soup
-                        link = rocklinksbyapss(url)
-                        print(link)
+                        url = url[:-1] if url[-1] == '/' else url
+    
+                        params = (('d', int(time.time()) + (60 * 4)),)
+                        r = client.get(url, params=params, headers= {'Referer': 'https://newforex.online/'})
+    
+                        soup = BeautifulSoup(r.text, 'html.parser')
+                        inputs = soup.find(id="go-link").find_all(name="input")
+                        data = { input.get('name'): input.get('value') for input in inputs }    
+                        time.sleep(7)
+    
+                        headers = {'Host': 'try2link.com', 'X-Requested-With': 'XMLHttpRequest', 'Origin': 'https://try2link.com', 'Referer': url}
+    
+                        bypassed_url = client.post('https://try2link.com/links/go', headers=headers,data=data)
+                        return bypassed_url.json()["url"]
             time.sleep(10)
 
-def try2link_bypass(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
-    
-    url = url[:-1] if url[-1] == '/' else url
-    
-    params = (('d', int(time.time()) + (60 * 4)),)
-    r = client.get(url, params=params, headers= {'Referer': 'https://newforex.online/'})
-    
-    soup = BeautifulSoup(r.text, 'html.parser')
-    inputs = soup.find(id="go-link").find_all(name="input")
-    data = { input.get('name'): input.get('value') for input in inputs }    
-    time.sleep(7)
-    
-    headers = {'Host': 'try2link.com', 'X-Requested-With': 'XMLHttpRequest', 'Origin': 'https://try2link.com', 'Referer': url}
-    
-    bypassed_url = client.post('https://try2link.com/links/go', headers=headers,data=data)
-    return bypassed_url.json()["url"]
 
-def rocklinksbyapss(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
-    if 'rocklinks.net' in url:
-        DOMAIN = "https://blog.disheye.com"
-    else:
-        DOMAIN = "https://rocklinks.net"
-
-    url = url[:-1] if url[-1] == '/' else url
-
-    code = url.split("/")[-1]
-    if 'rocklinks.net' in url:
-        final_url = f"{DOMAIN}/{code}?quelle="
-    else:
-        final_url = f"{DOMAIN}/{code}"
-
-    resp = client.get(final_url)
-    soup = BeautifulSoup(resp.content, "html.parser")
-    
-    try: inputs = soup.find(id="go-link").find_all(name="input")
-    except: return "Incorrect Link"
-    
-    data = { input.get('name'): input.get('value') for input in inputs }
-
-    h = { "x-requested-with": "XMLHttpRequest" }
-    
-    time.sleep(10)
-    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
-    try:
-        return r.json()['url']
-    except: return "Something went wrong :("
 print(ola(url))
