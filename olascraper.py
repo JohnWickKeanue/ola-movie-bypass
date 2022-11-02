@@ -137,5 +137,5 @@ def olamovies(url):
     print(links)
     return links
 
-url = "https://olamovies.wtf/total-dhamaal-2019-hindi/" #@param {type:"string"}
+url = "https://olamovies.wtf/total-dhamaal-2019-hindi/"
 olamovies(url)
