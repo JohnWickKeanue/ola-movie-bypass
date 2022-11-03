@@ -97,9 +97,7 @@ def olamovies(url):
         while 'rocklinks.net' not in soup and "try2link.com" not in soup:
          
             res = client.get("https://olamovies.ink/download/", params=params, headers=headers)
-            soup = BeautifulSoup(res.text,"html.parser")
-           
-            jack = soup.text
+            jack = res.text
             rose = jack.split('url = "')[-1]
             soup = rose.split('";')[0]
             
