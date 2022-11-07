@@ -135,5 +135,5 @@ def olamovies(url):
     print(links)
     return links
 
-url = "https://olamovies.wtf/total-dhamaal-2019-hindi/"
+url = "https://olamovies.cyou/total-dhamaal-2019-hindi/"
 olamovies(url)
