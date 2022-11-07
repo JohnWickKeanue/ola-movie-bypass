@@ -2,8 +2,8 @@ import time
 import cloudscraper
 from bs4 import BeautifulSoup
 
-url = "https://olamovies.wtf/download/?key=q84dMFiC0FYTVJoS5frBQSEqpFUgODxFinhNFysPVAvi4BuIx%2BQ%3D&id=e80cb9b8088e5aebb0998aa2caf32122"
-
+url = ""
+# Ex = https://olamovies.cyou/download/?key=D3z3IiRxtRiE41PmpNJ6UFl4lrNpws4zDBh4bOsNPTx8jC91eCs%3D&id=3269f1a1abbaca67ea2237ed57e68f3c
 def ola(url) :
     soup = "None"
     client = cloudscraper.create_scraper(allow_brotli=False)
