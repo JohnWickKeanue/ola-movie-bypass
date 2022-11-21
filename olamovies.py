@@ -20,7 +20,7 @@ def ola(url) :
             'Sec-Fetch-Site': 'same-origin',
             'Sec-Fetch-User': '?1',
         }
-    while 'rocklinks.net' not in soup and "try2link.com" not in soup:
+    while 'rocklinks.net' not in soup and "try2link.com" not in soup and "ez4short.com" not in soup:
             res = client.get(url, headers=headers)
             jack = res.text
             rose = jack.split('url = "')[-1]
@@ -63,6 +63,11 @@ def ola(url) :
     
                         bypassed_url = client.post('https://try2link.com/links/go', headers=headers,data=data)
                         return bypassed_url.json()["url"]
+            elif "ez4short.com" in soup:
+                        
+                        
+         
+    
             time.sleep(10)
 
 
