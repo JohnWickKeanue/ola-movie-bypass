@@ -151,7 +151,7 @@ def olamovies(url):
             final.append(rocklinksbyapss(ele))
         elif "try2link.com" in ele:
             final.append(try2link_bypass(ele))
-        elif ""ez4short.com" in ele:
+        elif "ez4short.com" in ele:
             final.append(ez4(ele))
         else:
             print(ele)
