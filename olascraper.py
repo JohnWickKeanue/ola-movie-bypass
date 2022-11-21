@@ -54,6 +54,32 @@ def rocklinksbyapss(url):
         return r.json()['url']
     except: return "Something went wrong :("
 
+def ez4(url):
+    
+    client = cloudscraper.create_scraper(allow_brotli=False)
+      
+    DOMAIN = "https://ez4short.com"
+     
+    ref = "https://techmody.io/"
+    
+    h = {"referer": ref}
+  
+    resp = client.get(url,headers=h)
+    
+    soup = BeautifulSoup(resp.content, "html.parser")
+    
+    inputs = soup.find_all("input")
+   
+    data = { input.get('name'): input.get('value') for input in inputs }
+
+    h = { "x-requested-with": "XMLHttpRequest" }
+    
+    time.sleep(8)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return r.json()['url']
+    except: return "Something went wrong :("
+
 def olamovies(url):
     
     print("this takes time, you might want to take a break.")
@@ -94,7 +120,7 @@ def olamovies(url):
         print("trying","https://olamovies.wtf/download/&key="+key+"&id="+id)
         
         url = "https://olamovies.wtf/download/&key="+key+"&id="+id
-        while 'rocklinks.net' not in soup and "try2link.com" not in soup:
+        while 'rocklinks.net' not in soup and "try2link.com" not in soup and "ez4short.com" not in soup:
          
             res = client.get("https://olamovies.ink/download/", params=params, headers=headers)
             jack = res.text
@@ -102,7 +128,7 @@ def olamovies(url):
             soup = rose.split('";')[0]
             
             if soup != "":
-                if "try2link.com" in soup or 'rocklinks.net' in soup:
+                if "try2link.com" in soup or 'rocklinks.net' in soup or "ez4short.com" in soup:
                     print("added", soup)
                     slist.append(soup)
                 else:
@@ -125,6 +151,8 @@ def olamovies(url):
             final.append(rocklinksbyapss(ele))
         elif "try2link.com" in ele:
             final.append(try2link_bypass(ele))
+        elif ""ez4short.com" in ele:
+            final.append(ez4(ele))
         else:
             print(ele)
     #print(final)
